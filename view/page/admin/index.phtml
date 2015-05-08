@@ -1,0 +1,44 @@
+<div class="block">
+<div class="block-title">
+    <h2>Page Module</h2>
+</div>
+<a href="<?=$this->url('admin/page',array('action' => 'create'))?>" class="btn btn-md btn-primary">Create</a>
+<table class="table table-striped table-borderless table-vcenter table-condensed">
+<thead>
+<tr>
+	<th width="10">ID</th>
+    <th width="8%">Status</th>
+    <th>Title</th>
+    <th>Permalink</th>
+    <th width="8%"></th>
+</tr>
+</thead>
+<?php foreach($pages as $entry) : ?>
+<tr>
+	<td><span class="label label-default"><?=$entry->getId()?></span></td>
+	<td><span class="label <?=$entry->getStatus()=='Published'?'label-success':'label-warning'?>"><?=$entry->getStatus()?></span></td>
+    <td><?=$entry->getTitle()?></td>
+    <td>
+    	<?php if($entry->getPermalink()) : ?>
+    	<a target="_blank" href="<?=$this->basePath()?>/<?=$entry->getPermalink()?>"><?=$this->basePath()?>/<?=$entry->getPermalink()?></a>
+        <?php else : ?>
+        <a target="_blank" href="<?=$this->url('page',array('id' => $entry->getId()))?>">Link</a>
+        <?php endif; ?>
+    </td>
+
+    <td class="text-center">
+    	<a href="<?=$this->url('admin/page',array('action' => 'edit', 'id' => $entry->getId()))?>" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>
+        <a href="<?=$this->url('admin/page',array('action' => 'delete', 'id' => $entry->getId()))?>" class="btn btn-xs btn-danger"><i class="fa fa-remove"></i></a>
+    </td>
+</tr>
+<?php endforeach; ?>
+</table>
+<?php echo
+$this->paginationControl(
+$this->pages,
+'sliding',
+array('partial/paginator', 'CanariumCore'),
+$this->routeParams
+)?>
+
+</div>

@@ -1,0 +1,292 @@
+<?php
+$this->headScript()->prependFile($this->basePath() . '/assets/admin/js/jquery-ui.js');
+$this->inlineScript()->prependFile($this->basePath() . '/assets/admin/js/plugins/ckeditor/adapters/jquery.js');
+$this->inlineScript()->prependFile($this->basePath() . '/assets/admin/js/plugins/ckeditor/config.js');
+$this->inlineScript()->prependFile($this->basePath() . '/assets/admin/js/plugins/ckeditor/ckeditor.js');
+$form = $this->form;
+
+$title = 'Create';
+$this->headTitle($title);
+
+$form->prepare();
+?>
+
+<div class="row">
+	<div class="col-md-8">
+    	<?=$this->form()->openTag($form)?>
+        <div class="block">
+        <div class="block-title">
+            <h2>Publish</h2>
+        </div>
+        <div><i class="fa fa-info-circle"></i> Status: <span class="label <?=$page->getStatus()=='Published'?'label-success':'label-warning'?>"><strong><?=$page->getStatus()?></strong></span></div>
+        <br />
+        <?=$this->formHidden($form->get('page')->get('id'))?>
+        <?=$this->formRow($form->get('page')->get('submit'))?>
+        <?=$this->formRow($form->get('page')->get('submit')->setLabel('Publish')->setValue('Publish')->setAttribute('class','btn btn-md btn-success'))?>
+        <!--<button id="btn-page-draft" name="submit" type="submit" value="Draft" class="btn btn-md btn-warning"><i class="fa fa-save"></i> <strong>Draft</strong></button>
+        <button id="btn-page-publish" name="submit" type="submit" value="Publish" class="btn btn-md btn-primary"><i class="fa fa-save"></i> <strong>Publish</strong></button>-->
+        <br /><br />
+        </div>
+        
+        <section class="panel">
+                <header class="panel-heading tab-dark ">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a data-toggle="tab" href="#main">Main</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" href="#meta">Meta</a>
+                        </li>
+                    </ul>
+                </header>
+                <div class="panel-body">
+                    <div class="tab-content">
+                        <div id="main" class="tab-pane active">
+                        	<div class="form-group">
+                                <label class="col-md-2 control-label">Name</label>
+                                <div class="col-md-10">
+                                    <?=$this->formRow($form->get('page')->get('name'))?>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Title</label>
+                                <div class="col-md-10">
+                                    <?=$this->formRow($form->get('page')->get('title'))?>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Permalink</label>
+                                <div class="col-md-10">
+                                    <?=$this->formRow($form->get('page')->get('permalink'))?>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-md-2 control-label">Template</label>
+                                <div class="col-md-10">
+                                    <?=$this->formRow($form->get('page')->get('template'))?>
+                                </div>
+                            </div>
+                            
+                            <button type="button" class="add-section btn btn-sm btn-success"><i class="fa fa-plus"></i> Add Section</button>
+                            <?php foreach($form->get('page')->get('section') as $entry) :?>
+                            <div class="form-group form-section">
+                                <label class="col-md-2 control-label">Section</label>
+                                <div class="col-md-10">
+                                    <?=$this->formRow($entry->get('name'))?>
+                                    <?=$this->formRow($entry->get('title'))?>
+                                    <?=$this->formRow($entry->get('content'))?>
+                                </div>
+                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                        <div id="meta" class="tab-pane">
+                        	Meta Keywords
+							<?=$this->formRow($form->get('page')->get('metakeywords'))?>
+                            Meta Description
+                            <?=$this->formRow($form->get('page')->get('metadescription'))?>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+<?=$this->form()->closeTag()?>
+    </div>
+    <div class="col-md-4">
+        
+        
+        <div class="block">
+        <div class="block-title">
+            <h2>Upload Here</h2>
+        </div>
+        <form name="fileupload" id="fileupload" action="" method="POST" enctype="multipart/form-data">
+            <span class="btn no-radius btn-primary fileinput-button" onclick="$('#upload-files').click()">
+                <i class="glyphicon glyphicon-plus-sign"></i>
+                <span>Add Files</span>
+            </span>
+            
+            <div class="dropzone-container dropzone">
+                    
+                    <div id="dropzone" class="dz-default dz-message"><span>Drop files here to upload</span></div>
+                    <!-- Redirect browsers with JavaScript disabled to the origin page -->
+                    <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+                    <div class="row fileupload-buttonbar">
+                        
+                        <div class="col-lg-7">
+                            
+                            <input id="upload-files" type="file" name="files[]" multiple>
+                            
+                        </div>
+                        
+                    </div>
+            <div class="row files">
+            </div>
+            
+            <span style="color:#666; font-size:10px; position:absolute; bottom:0; left:0;"><strong>Allowed file type</strong> : jpg | png | gif &nbsp;&nbsp; <strong>Max file size</strong> : 10MB</span>
+            </div>
+            </form>
+            
+        <br />
+        <br />
+        </div>
+</div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="json-edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      
+    </div>
+  </div>
+</div>
+
+<style>
+#upload-files
+{
+	display:hidden;
+	position: relative;
+	width: 0; height:0;
+	opacity: 0;
+	-moz-opacity: 0;
+	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+}
+</style>
+
+<script type="text/javascript">
+var template = $('.form-section:first').clone(true,true);
+var ctr = $('.form-section').length;
+var section = function(){
+	ctr++; 
+	var entry = template.clone();
+	
+	var replaced = entry.html().replace(/\[[0-9]\]/g,'['+ctr+']');
+	entry.html(replaced);
+	entry.find('input[type=text],input[type=hidden]').val('');
+	entry.find('textarea').val('').ckeditor();
+	entry.insertAfter('.form-section:last');
+	//entry.find('.action-delete').append($('<a class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></a>').click(function(){entry.remove()}));
+	
+	return entry;
+};
+$('.add-section').click(section);
+</script>
+
+
+<script id="template-upload" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}
+    <div style="position:relative;" class="col-xs-3 col-sm-2 col-md-2 col-lg-2 template-upload fade" align="center">
+        
+            <span class="preview"></span>
+        
+            <!--<p class="name">{%=file.name%}</p>-->
+            <div><strong class="error text-danger"></strong></div>
+			
+            <p class="size">Processing...</p>
+            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
+        
+			<div style="position:absolute; top:0; right:0;">
+            {% if (!i && !o.options.autoUpload) { %}
+                <button class="btn btn-primary start btn-xs" disabled>
+                    <i class="glyphicon glyphicon-upload"></i>
+                    <span>Start</span>
+                </button>
+            {% } %}
+            {% if (!i) { %}
+                <button class="btn btn-warning cancel btn-xs">
+                    <i class="glyphicon glyphicon-ban-circle"></i>
+                    <span>Cancel</span>
+                </button>
+            {% } %}
+			</div>
+			
+	</div>
+{% } %}
+</script>
+<!-- The template to display files available for download -->
+<script id="template-download" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}
+	<div class="col-md-6 template-download fade" align="left">
+		<span class="preview">
+				<a href="/admin/page/attachment/json-edit?pageid={%=file.page_id%}&file={%=file.name%}" data-target="#json-edit"><img data-toggle="modal" src="{%=file.url%}" class="img-responsive img-thumbnail"></a>
+		</span>
+		{% if (file.error) { %}
+			<div><span class="label label-danger">Error</span> {%=file.error%}</div>
+		{% } %}
+		
+		<div style="position:absolute; top:0; left:0;">
+{% if (file.deleteUrl) { %}
+	<button title="remove" class="btn btn-danger btn-xs delete no-radius" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+		<i class="fa fa-remove"></i>
+	</button>
+	<!--<input type="checkbox" name="delete" value="1" class="toggle">-->
+{% } else { %}
+	<button class="btn btn-warning cancel">
+		<i class="glyphicon glyphicon-ban-circle"></i>
+		<span>Cancel</span>
+	</button>
+{% } %}
+		</div>
+	</div>
+{% } %}
+</script>
+
+<script id="template-download-bak" type="text/x-tmpl">
+
+{% for (var i=0, file; file=o.files[i]; i++) { %}
+	
+	<tr class="template-download">
+		<td style="border-bottom:1px dashed #DEDEDE">
+		
+		<i title="{%=file.name%}" class="upload-icon-sm upload-icon-sm-{%=file.name.split('.').pop()%} shadow"></i>&nbsp;
+		
+		{%=file.name%}
+		{% if (file.deleteUrl) { %}
+			<button title="remove" class="btn pull-right btn-danger btn-xs delete no-radius" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+				<i class="fa fa-remove"></i>
+			</button>
+			<!--<input type="checkbox" name="delete" value="1" class="toggle">-->
+			{% } else { %}
+			<button class="btn btn-warning cancel">
+				<i class="glyphicon glyphicon-ban-circle"></i>
+				<span>Cancel</span>
+			</button>
+			{% } %}
+
+		</td>
+	</tr>
+{% } %}
+</script>
+
+<script src="<?=$this->basePath()?>/assets/admin/js/jquery-ui.js"></script>
+<!-- The Templates plugin is included to render the upload/download listings -->
+<script src="<?=$this->basePath()?>/assets/admin/js/upload/tmpl.min.js"></script>
+
+<!-- The Load Image plugin is included for the preview images and image resizing functionality -->
+<script src="<?=$this->basePath()?>/assets/admin/js/upload/load-image.min.js"></script>
+<!-- The Canvas to Blob plugin is included for image resizing functionality -->
+<script src="<?=$this->basePath()?>/assets/admin/js/upload/canvas-to-blob.min.js"></script>
+<!-- Bootstrap JS is not required, but included for the responsive demo navigation -->
+<!-- blueimp Gallery script -->
+<script src="<?=$this->basePath()?>/assets/admin/js/upload/jquery.blueimp-gallery.min.js"></script>
+<!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
+<script src="<?=$this->basePath()?>/assets/admin/js/upload/jquery.iframe-transport.js"></script>
+<!-- The basic File Upload plugin -->
+<script src="<?=$this->basePath()?>/assets/admin/js/upload/jquery.fileupload.js"></script>
+<!-- The File Upload processing plugin -->
+<script src="<?=$this->basePath()?>/assets/admin/js/upload/jquery.fileupload-process.js"></script>
+<!-- The File Upload image preview & resize plugin -->
+<script src="<?=$this->basePath()?>/assets/admin/js/upload/jquery.fileupload-image.js"></script>
+<!-- The File Upload audio preview plugin -->
+<!--<script src="/assets/admin/js/upload/jquery.fileupload-audio.js"></script>-->
+<!-- The File Upload video preview plugin -->
+<!--<script src="/assets/admin/js/upload/jquery.fileupload-video.js"></script>-->
+<!-- The File Upload validation plugin -->
+<script src="<?=$this->basePath()?>/assets/admin/js/upload/jquery.fileupload-validate.js"></script>
+<!-- The File Upload user interface plugin -->
+<script src="<?=$this->basePath()?>/assets/admin/js/upload/jquery.fileupload-ui.js"></script>
+<!-- The main application script -->
+
+<script type="text/javascript">PAGE_ID = <?=$page->getId()?>;</script>
+<script src="<?=$this->basePath()?>/assets/admin/js/upload/main.js"></script>
