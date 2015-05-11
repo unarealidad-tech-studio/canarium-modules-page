@@ -33,7 +33,10 @@
     "autoload": {
         "psr-0": {
             "Page\\": "src/"
-        }
+        },
+        "classmap": [
+            "./Module.php"
+        ]
     }
 
 }
