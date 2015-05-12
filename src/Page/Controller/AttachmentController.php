@@ -24,18 +24,23 @@ class AttachmentController extends AbstractActionController
 		$objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
 		$form = new \Page\Form\AttachmentForm($objectManager);
 		$entity = $objectManager->getRepository('Page\Entity\Attachment')->findOneBy(array('page' => $pageid, 'name' => $file));
+
+		if (!$entity) {
+			throw new \ErrorHandler\Exception\NotFoundException('Page Attachment Not Found');
+		}
+
 		$form->bind($entity);
 		if ($this->request->isPost()) {
 			$post = $this->request->getPost();
 			$form->setData($post);
-			
+
 			if ($form->isValid()) {
 				$objectManager->persist($entity);
 				$objectManager->flush();
 				return $this->redirect()->toRoute('admin/page', array('action' => 'edit' , 'id' => $entity->getPage()->getId()));
 			}
 		}
-	
+
 		$view = new ViewModel();
 		$view->setTemplate('page/attachment/json-edit');
 		$view->setTerminal(true);
