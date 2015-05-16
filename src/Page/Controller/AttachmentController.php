@@ -18,7 +18,12 @@ use Zend\Paginator\Paginator as ZendPaginator;
 
 class AttachmentController extends AbstractActionController
 {
-	public function jsonEditAction(){
+	public function indexAction()
+	{
+	}
+
+	public function jsonEditAction()
+	{
 		$pageid = $this->params()->fromQuery('pageid');
 		$file = $this->params()->fromQuery('file');
 		$objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
@@ -35,7 +40,6 @@ class AttachmentController extends AbstractActionController
 			$form->setData($post);
 
 			if ($form->isValid()) {
-				$objectManager->persist($entity);
 				$objectManager->flush();
 				return $this->redirect()->toRoute('admin/page', array('action' => 'edit' , 'id' => $entity->getPage()->getId()));
 			}
