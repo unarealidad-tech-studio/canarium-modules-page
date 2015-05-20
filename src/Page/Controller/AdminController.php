@@ -38,8 +38,15 @@ class AdminController extends AbstractActionController
 		$objectManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
 		$form = new \Page\Form\PageForm($objectManager);
 
-		$entity = new \Page\Entity\Page();
+		$id = $this->params()->fromRoute('id',0);
+		$entity = $objectManager->getRepository('Page\Entity\Page')->find($id);
+		if(!$entity) {
+			$entity = new \Page\Entity\Page();
+			$objectManager->persist($entity);
+			$objectManager->flush();
+			return $this->redirect()->toRoute('admin/page',array('action' => 'create', 'id' => $entity->getId() ));
 
+		}
 		$form->bind($entity);
 
 		if ($this->request->isPost()) {
