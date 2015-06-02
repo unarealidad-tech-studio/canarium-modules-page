@@ -20,7 +20,7 @@ class PageFieldset extends Fieldset implements InputFilterProviderInterface
                 'type'  => 'hidden',
             ),
         ));
-		
+
 		$this->add(array(
             'type' => 'Zend\Form\Element\Text',
             'name' => 'name',
@@ -30,7 +30,7 @@ class PageFieldset extends Fieldset implements InputFilterProviderInterface
 				'class' => 'form-control',
 			),
         ));
-		
+
 		$this->add(array(
             'type' => 'Zend\Form\Element\Text',
             'name' => 'title',
@@ -40,7 +40,7 @@ class PageFieldset extends Fieldset implements InputFilterProviderInterface
 				'class' => 'form-control',
 			),
         ));
-		
+
 		$this->add(array(
             'type' => 'Zend\Form\Element\Text',
             'name' => 'template',
@@ -50,7 +50,7 @@ class PageFieldset extends Fieldset implements InputFilterProviderInterface
 				'class' => 'form-control',
 			),
         ));
-		
+
 		$sectionFieldset = new SectionFieldset($objectManager);
         $this->add(array(
             'type'    => 'Zend\Form\Element\Collection',
@@ -60,7 +60,7 @@ class PageFieldset extends Fieldset implements InputFilterProviderInterface
                 'target_element' => $sectionFieldset
             )
         ));
-		
+
 		$this->add(array(
             'type' => 'Zend\Form\Element\Text',
             'name' => 'metakeywords',
@@ -70,7 +70,7 @@ class PageFieldset extends Fieldset implements InputFilterProviderInterface
 				'class' => 'form-control',
 			),
         ));
-		
+
 		$this->add(array(
             'type' => 'Zend\Form\Element\Textarea',
             'name' => 'metadescription',
@@ -79,7 +79,7 @@ class PageFieldset extends Fieldset implements InputFilterProviderInterface
 				'class' => 'form-control',
 			),
         ));
-		
+
 		$this->add(array(
             'type' => 'Zend\Form\Element\Text',
             'name' => 'permalink',
@@ -89,13 +89,13 @@ class PageFieldset extends Fieldset implements InputFilterProviderInterface
 				'class' => 'form-control',
 			),
         ));
-		
+
 		$button = new Element\Button('submit');
 		$button->setLabel('Draft')
 			   ->setValue('Draft')
 			   ->setAttribute('class','btn btn-md btn-warning')->setAttribute('type','submit');
 		$this->add($button);
-		
+
 		$this->add(
 			array(
 				'type' => 'DoctrineModule\Form\Element\ObjectSelect',
@@ -113,32 +113,32 @@ class PageFieldset extends Fieldset implements InputFilterProviderInterface
 				),
 			)
 		);
-		
+
     }
-	
+
 	public function getInputFilterSpecification(){
-		return array(		
+		return array(
 			'name' => array(
 				'required' => true,
 				'validators' => array(
 					array(
                         'name' => 'DoctrineModule\Validator\UniqueObject',
                         'options' => array(
-							'use_context' => false,
+							'use_context' => true,
 							'object_manager' => $this->objectManager,
                             'object_repository' => $this->objectManager->getRepository('Page\Entity\Page'),
                             'fields' => 'name',
-							'context' => array('id'),					
+							'context' => array('id'),
 							'messages' => array(
 								'objectNotUnique' => 'This permalink is already taken.'
 							),
                         ),
                     )
 				),
-			),	
+			),
 			'title' => array(
 				'required' => false,
-			),			
+			),
 			'metakeywords' => array(
 				'required' => false,
 			),
@@ -160,11 +160,11 @@ class PageFieldset extends Fieldset implements InputFilterProviderInterface
 					array(
                         'name' => 'DoctrineModule\Validator\UniqueObject',
                         'options' => array(
-							'use_context' => false,
+							'use_context' => true,
 							'object_manager' => $this->objectManager,
                             'object_repository' => $this->objectManager->getRepository('Page\Entity\Page'),
                             'fields' => 'permalink',
-							'context' => array('id'),					
+							'context' => array('id'),
 							'messages' => array(
 								'objectNotUnique' => 'This permalink is already taken.'
 							),
@@ -175,5 +175,5 @@ class PageFieldset extends Fieldset implements InputFilterProviderInterface
         );
 	}
 
-    
+
 }
