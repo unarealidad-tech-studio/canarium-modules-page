@@ -12,64 +12,61 @@ $form->prepare();
 ?>
 
 <div class="row">
-	<div class="col-md-8">
-    	<?=$this->form()->openTag($form)?>
-        <div class="block">
-        <div class="block-title">
-            <h2>Publish</h2>
-        </div>
-        <div><i class="fa fa-info-circle"></i> Status: <span class="label <?=$page->getStatus()=='Published'?'label-success':'label-warning'?>"><strong><?=$page->getStatus()?></strong></span></div>
-        <br />
-        <?=$this->formHidden($form->get('page')->get('id'))?>
-        <?=$this->formRow($form->get('page')->get('submit'))?>
-        <?=$this->formRow($form->get('page')->get('submit')->setLabel('Publish')->setValue('Publish')->setAttribute('class','btn btn-md btn-success'))?>
-        <!--<button id="btn-page-draft" name="submit" type="submit" value="Draft" class="btn btn-md btn-warning"><i class="fa fa-save"></i> <strong>Draft</strong></button>
-        <button id="btn-page-publish" name="submit" type="submit" value="Publish" class="btn btn-md btn-primary"><i class="fa fa-save"></i> <strong>Publish</strong></button>-->
-        <br /><br />
-        </div>
-        
+    <div class="col-md-8">
+        <?=$this->form()->openTag($form)?>
         <section class="panel">
-                <header class="panel-heading tab-dark ">
-                    <ul class="nav nav-tabs">
-                        <li class="active">
-                            <a data-toggle="tab" href="#main">Main</a>
-                        </li>
-                        <li class="">
-                            <a data-toggle="tab" href="#meta">Meta</a>
-                        </li>
-                    </ul>
-                </header>
-                <div class="panel-body">
-                    <div class="tab-content">
-                        <div id="main" class="tab-pane active">
-                        	<div class="form-group">
-                                <label class="col-md-2 control-label">Name</label>
-                                <div class="col-md-10">
-                                    <?=$this->formRow($form->get('page')->get('name'))?>
-                                </div>
+            <header class="panel-heading">
+                Publish
+            </header>
+            <div class="panel-body">
+                <div><i class="fa fa-info-circle"></i> Status: <span class="label <?=$page->getStatus()=='Published'?'label-success':'label-warning'?>"><strong><?=$page->getStatus()?></strong></span></div>
+                <br />
+                <?=$this->formHidden($form->get('page')->get('id'))?>
+                <?=$this->formRow($form->get('page')->get('submit'))?>
+                <?=$this->formRow($form->get('page')->get('submit')->setLabel('Publish')->setValue('Publish')->setAttribute('class','btn btn-md btn-success'))?>
+                <!--<button id="btn-page-draft" name="submit" type="submit" value="Draft" class="btn btn-md btn-warning"><i class="fa fa-save"></i> <strong>Draft</strong></button>
+                <button id="btn-page-publish" name="submit" type="submit" value="Publish" class="btn btn-md btn-primary"><i class="fa fa-save"></i> <strong>Publish</strong></button>-->
+                <br /><br />
+            </div>
+        </section>
+
+        <section class="isolate-tabs">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#main">Main</a></li>
+                <li><a data-toggle="tab" href="#meta">Meta</a></li>
+                <li><a data-toggle="tab" href="#extra">Extra</a></li>
+            </ul>
+            <div class="panel-body">
+                <div class="tab-content">
+                    <div id="main" class="tab-pane active">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Name</label>
+                            <div class="col-md-10">
+                                <?=$this->formRow($form->get('page')->get('name'))?>
                             </div>
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">Title</label>
-                                <div class="col-md-10">
-                                    <?=$this->formRow($form->get('page')->get('title'))?>
-                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Title</label>
+                            <div class="col-md-10">
+                                <?=$this->formRow($form->get('page')->get('title'))?>
                             </div>
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">Permalink</label>
-                                <div class="col-md-10">
-                                    <?=$this->formRow($form->get('page')->get('permalink'))?>
-                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Permalink</label>
+                            <div class="col-md-10">
+                                <?=$this->formRow($form->get('page')->get('permalink'))?>
                             </div>
-                            
-                            <div class="form-group">
-                                <label class="col-md-2 control-label">Template</label>
-                                <div class="col-md-10">
-                                    <?=$this->formRow($form->get('page')->get('template'))?>
-                                </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Template</label>
+                            <div class="col-md-10">
+                                <?=$this->formRow($form->get('page')->get('template'))?>
                             </div>
-                            
-                            <button type="button" class="add-section btn btn-sm btn-success"><i class="fa fa-plus"></i> Add Section</button>
-                            <?php foreach($form->get('page')->get('section') as $entry) :?>
+                        </div>
+
+                        <button type="button" class="add-section btn btn-sm btn-success"><i class="fa fa-plus"></i> Add Section</button>
+                        <?php foreach($form->get('page')->get('section') as $entry) :?>
                             <div class="form-group form-section">
                                 <label class="col-md-2 control-label">Section</label>
                                 <div class="col-md-10">
@@ -78,114 +75,148 @@ $form->prepare();
                                     <?=$this->formRow($entry->get('content'))?>
                                 </div>
                             </div>
-                            <?php endforeach; ?>
-                        </div>
-                        <div id="meta" class="tab-pane">
-                        	Meta Keywords
-							<?=$this->formRow($form->get('page')->get('metakeywords'))?>
-                            Meta Description
-                            <?=$this->formRow($form->get('page')->get('metadescription'))?>
-                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <div id="meta" class="tab-pane">
+                        Meta Keywords
+                        <?=$this->formRow($form->get('page')->get('metakeywords'))?>
+                        Meta Description
+                        <?=$this->formRow($form->get('page')->get('metadescription'))?>
+                    </div>
+                    <div id="extra" class="tab-pane">
+                        <?=$this->formRow($form->get('page')->get('form'))?>
                     </div>
                 </div>
-            </section>
-            
-<?=$this->form()->closeTag()?>
+            </div>
+        </section>
+
+
+
+
+        <?=$this->form()->closeTag()?>
     </div>
     <div class="col-md-4">
-        
-        
-        <div class="block">
-        <div class="block-title">
-            <h2>Upload Here</h2>
-        </div>
-        <form name="fileupload" id="fileupload" action="" method="POST" enctype="multipart/form-data">
-            <span class="btn no-radius btn-primary fileinput-button" onclick="$('#upload-files').click()">
+
+
+        <section class="panel">
+            <header class="panel-heading">
+                Main
+            </header>
+            <div class="panel-body">
+                <form name="fileupload" id="fileupload" action="" method="POST" enctype="multipart/form-data">
+            <span class="btn btn-md btn-success fileinput-button" onclick="$('#upload-files').click()">
                 <i class="glyphicon glyphicon-plus-sign"></i>
                 <span>Add Files</span>
             </span>
-            
-            <div class="dropzone-container dropzone">
-                    
-                    <div id="dropzone" class="dz-default dz-message"><span>Drop files here to upload</span></div>
-                    <!-- Redirect browsers with JavaScript disabled to the origin page -->
-                    <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
-                    <div class="row fileupload-buttonbar">
-                        
-                        <div class="col-lg-7">
-                            
-                            <input id="upload-files" type="file" name="files[]" multiple>
-                            
+
+                    <div class="dropzone-container dropzone">
+
+                        <div id="dropzone" class="dz-default dz-message"><span>Drop files here to upload</span></div>
+                        <!-- Redirect browsers with JavaScript disabled to the origin page -->
+                        <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+                        <div class="row fileupload-buttonbar">
+
+                            <div class="col-lg-7">
+
+                                <input id="upload-files" type="file" name="files[]" multiple>
+
+                            </div>
+
                         </div>
-                        
+                        <div class="row files">
+                        </div>
+
+                        <span style="color:#666; font-size:10px; position:absolute; bottom:0; left:0;"><strong>Allowed file type</strong> : jpg | png | gif &nbsp;&nbsp; <strong>Max file size</strong> : 10MB</span>
                     </div>
-            <div class="row files">
+                </form>
+
+                <br />
+                <br />
             </div>
-            
-            <span style="color:#666; font-size:10px; position:absolute; bottom:0; left:0;"><strong>Allowed file type</strong> : jpg | png | gif &nbsp;&nbsp; <strong>Max file size</strong> : 10MB</span>
-            </div>
-            </form>
-            
-        <br />
-        <br />
-        </div>
-</div>
+        </section>
+    </div>
 </div>
 
 
 <!-- Modal -->
 <div class="modal fade" id="json-edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content">
-      
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+
+        </div>
     </div>
-  </div>
 </div>
 
 <style>
-#upload-files
-{
-	display:hidden;
-	position: relative;
-	width: 0; height:0;
-	opacity: 0;
-	-moz-opacity: 0;
-	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);
-}
+    #upload-files
+    {
+        display:hidden;
+        position: relative;
+        width: 0; height:0;
+        opacity: 0;
+        -moz-opacity: 0;
+        filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+    }
+    /* Dropzone - image uplaod */
+    .dropzone-container {
+        position: relative;
+        background-color: #f9f9f9;
+        border: 2px dashed #ebeef2;
+        border-radius: 10px;
+        padding: 1em;
+        transition: border-color 0.35s ease-out 0s;
+        min-height: 170px;
+        margin-top: 30px;
+    }
+
+    .dropzone-container table.files {
+        position: absolute;
+        width: 97%;
+    }
+
+    #dropzone {
+        position:absolute;
+        height:130px;
+        width:97%;
+    }
+
+    .dropzone .dz-message {
+        padding: 50px 0;
+    }
 </style>
 
 <script type="text/javascript">
-var template = $('.form-section:first').clone(true,true);
-var ctr = $('.form-section').length;
-var section = function(){
-	ctr++; 
-	var entry = template.clone();
-	
-	var replaced = entry.html().replace(/\[[0-9]\]/g,'['+ctr+']');
-	entry.html(replaced);
-	entry.find('input[type=text],input[type=hidden]').val('');
-	entry.find('textarea').val('').ckeditor();
-	entry.insertAfter('.form-section:last');
-	//entry.find('.action-delete').append($('<a class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></a>').click(function(){entry.remove()}));
-	
-	return entry;
-};
-$('.add-section').click(section);
+    var template = $('.form-section:first').clone(true,true);
+    var ctr = $('.form-section').length;
+    var section = function(){
+        ctr++;
+        var entry = template.clone();
+
+        var replaced = entry.html().replace(/\[[0-9]\]/g,'['+ctr+']');
+        entry.html(replaced);
+        entry.find('input[type=text],input[type=hidden]').val('');
+        entry.find('textarea').val('').ckeditor();
+        entry.insertAfter('.form-section:last');
+        //entry.find('.action-delete').append($('<a class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></a>').click(function(){entry.remove()}));
+
+        return entry;
+    };
+    $('.add-section').click(section);
 </script>
 
 
 <script id="template-upload" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
     <div style="position:relative;" class="col-xs-3 col-sm-2 col-md-2 col-lg-2 template-upload fade" align="center">
-        
+
             <span class="preview"></span>
-        
+
             <!--<p class="name">{%=file.name%}</p>-->
             <div><strong class="error text-danger"></strong></div>
-			
+
             <p class="size">Processing...</p>
             <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
-        
+
 			<div style="position:absolute; top:0; right:0;">
             {% if (!i && !o.options.autoUpload) { %}
                 <button class="btn btn-primary start btn-xs" disabled>
@@ -200,7 +231,7 @@ $('.add-section').click(section);
                 </button>
             {% } %}
 			</div>
-			
+
 	</div>
 {% } %}
 </script>
@@ -214,7 +245,7 @@ $('.add-section').click(section);
 		{% if (file.error) { %}
 			<div><span class="label label-danger">Error</span> {%=file.error%}</div>
 		{% } %}
-		
+
 		<div style="position:absolute; top:0; left:0;">
 {% if (file.deleteUrl) { %}
 	<button title="remove" class="btn btn-danger btn-xs delete no-radius" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
@@ -235,12 +266,12 @@ $('.add-section').click(section);
 <script id="template-download-bak" type="text/x-tmpl">
 
 {% for (var i=0, file; file=o.files[i]; i++) { %}
-	
+
 	<tr class="template-download">
 		<td style="border-bottom:1px dashed #DEDEDE">
-		
+
 		<i title="{%=file.name%}" class="upload-icon-sm upload-icon-sm-{%=file.name.split('.').pop()%} shadow"></i>&nbsp;
-		
+
 		{%=file.name%}
 		{% if (file.deleteUrl) { %}
 			<button title="remove" class="btn pull-right btn-danger btn-xs delete no-radius" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
