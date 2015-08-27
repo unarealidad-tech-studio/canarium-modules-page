@@ -52,6 +52,12 @@ class Module
 					$objectManager = $locator->get('doctrine.entitymanager.orm_default');
 					return new \Page\View\Helper\GetPage($objectManager);
 				},
+                'getFormPages' => function($sm) {
+                    //$sm is the view helper manager, so we need to fetch the main service manager
+                    $locator = $sm->getServiceLocator();
+                    $objectManager = $locator->get('doctrine.entitymanager.orm_default');
+                    return new \Page\View\Helper\GetFormPages($objectManager);
+                },
 			),
 		);
 	}
