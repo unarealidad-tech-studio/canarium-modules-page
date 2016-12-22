@@ -1,10 +1,10 @@
 {
     "name":         "unarealidad/canarium-modules-page",
     "type":         "library",
-    "description":  "Lorem Ipsum",
+    "description":  "Enables Page functionality on Canarium.",
     "keywords":     ["canarium", "una realidad"],
-    "homepage":     "http://packages.canarium.ph",
-    "license":      "proprietary",
+    "homepage":     "http://www.canarium.ph",
+    "license":      "MIT",
     "authors": [
         {
             "name": "Jethro Laviste.",
@@ -15,7 +15,8 @@
         {
             "name": "Errol A. Zuñiga Jr.",
             "email": "errol.zuniga@unarealidad.com",
-            "role": "developer"
+            "role": "developer",
+            "homepage": "https://github.com/Fatal-Errol"
         }
     ],
     "support": {
