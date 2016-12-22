@@ -1,5 +1,5 @@
 {
-    "name":         "canarium/canarium-modules/page",
+    "name":         "unarealidad/canarium-modules-page",
     "type":         "library",
     "description":  "Lorem Ipsum",
     "keywords":     ["canarium", "una realidad"],
@@ -19,13 +19,13 @@
         }
     ],
     "support": {
-        "email":    "jethro.laviste@unarealidad.com"
+        "email":    "errol.zuniga@unarealidad.com"
     },
 
     "minimum-stability": "stable",
 
     "require": {
-        "canarium/canarium-kernal/canarium-core" : "dev-master"
+        "unarealidad/canarium-kernal-core" : "dev-master"
     },
 
     "repositories": [
