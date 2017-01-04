@@ -21,7 +21,7 @@ _None_
 # Exposed Pages
 
 URL | Template | Access | Description
------ | ----- | ----- | ----- | -----
+----- | ----- | ----- | -----
 /admin/page | admin/index.phtml | Admin | Displays the page CRUD management page.
 
 
